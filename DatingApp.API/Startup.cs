@@ -48,7 +48,7 @@ namespace DatingApp.API
             services.AddDbContext<DataContext>(x =>
             {
                 x.UseLazyLoadingProxies();
-                x.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             ConfigureServices(services);
@@ -90,6 +90,8 @@ namespace DatingApp.API
             }
             else
             {
+                // Use for production
+
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
@@ -104,10 +106,12 @@ namespace DatingApp.API
                         }
                     });
                 });
-                // app.UseHsts();
+                app.UseHsts();
             }
+            // Use for deployment
 
-            // app.UseHttpsRedirection();
+            // app.UseDeveloperExceptionPage();
+            app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseDefaultFiles();
