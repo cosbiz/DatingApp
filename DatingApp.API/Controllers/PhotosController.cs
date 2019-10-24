@@ -14,7 +14,6 @@ using Microsoft.Extensions.Options;
 
 namespace DatingApp.API.Controllers
 {
-    [Authorize]
     [Route("api/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
@@ -154,7 +153,7 @@ namespace DatingApp.API.Controllers
 
             if (photoFromRepo.PublicId == null)
             {
-                _repo.Delete(photoFromRepo); 
+                _repo.Delete(photoFromRepo);
             }
 
             if (await _repo.SaveAll())
